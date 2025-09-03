@@ -14,7 +14,7 @@ const app = express();
 // Middleware
 app.use(
   cors({
-    origin: process.env.REACT_APP_API_BASE || "*", // fallback for local dev
+    origin: process.env.FRONTEND_ORIGIN || "*", // fallback for local dev
     credentials: false,
   })
 );

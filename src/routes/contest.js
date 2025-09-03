@@ -40,16 +40,16 @@ router.get('/questions', async (req, res) => {
 router.post('/submissions', async (req, res) => {
   try {
     console.log('Submission request received:', req.body);
-    const { answers, passkey } = req.body; // answers is an object like {1: 'answer1', 2: 'answer2', ...}, passkey is a string
+    const { answers, confirmation } = req.body; // answers is an object like {1: 'answer1', 2: 'answer2', ...}, confirmation is a string
 
     if (!answers || typeof answers !== 'object') {
       console.log('Invalid answers format:', answers);
       return res.status(400).json({ error: 'Answers required' });
     }
 
-    if (!passkey || typeof passkey !== 'string') {
-      console.log('Invalid passkey format:', passkey);
-      return res.status(400).json({ error: 'Passkey required' });
+    if (!confirmation || typeof confirmation !== 'string') {
+      console.log('Invalid confirmation format:', confirmation);
+      return res.status(400).json({ error: 'Confirmation required' });
     }
 
     if (req.team.currentStage !== 'set1') {
@@ -63,12 +63,10 @@ router.post('/submissions', async (req, res) => {
       return res.status(409).json({ error: 'Already submitted' });
     }
 
-    // Validate the single passkey against a predefined value or logic
-    // For example, assume the passkey is '7819' (this should be stored securely)
-    const expectedPasskey = '7819'; // TODO: Replace with actual passkey logic or config
-    if (passkey !== expectedPasskey) {
-      console.log('Invalid submission passkey:', passkey);
-      return res.status(403).json({ error: 'Invalid passkey' });
+    // Validate the confirmation by checking if it equals 'end'
+    if (confirmation.toLowerCase() !== 'end') {
+      console.log('Invalid submission confirmation:', confirmation);
+      return res.status(403).json({ error: 'Invalid confirmation' });
     }
 
     let totalScore = 0;
