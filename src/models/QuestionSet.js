@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const QSchema = new mongoose.Schema({
   title: String,
   description: String,
-  type: { type: String, enum: ['fill_blank'], default: 'fill_blank' }
+  type: { type: String, enum: ['fill_blank', 'decoding'], default: 'fill_blank' }
 },{ _id:false });
 
 const QuestionSetSchema = new mongoose.Schema({
